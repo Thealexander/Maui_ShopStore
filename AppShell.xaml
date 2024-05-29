@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ShopApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:ShopApp.Views"
+    Shell.FlyoutBehavior="Flyout"
+    xmlns:info="clr-namespace:Microsoft.Maui.ApplicationModel;assembly=Microsoft.Maui.Essentials"
+    >
+
+    <Shell.FlyoutHeader>
+        <Image Source="dotnet_bot.svg" WidthRequest="120" Margin="10"/>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="10">
+            <Label Text="{x:Static info:AppInfo.Name}"/>
+            <Label Text="{x:Static info:AppInfo.VersionString}"/>
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+    
+    
+
+    <ShellContent
+        Title="About MyStore"
+        ContentTemplate="{DataTemplate views:AboutPage}"
+        Route="AboutPage" />
+
+
+    <FlyoutItem Title="Settings">
+        <Tab Title="Summary">
+            <ShellContent
+            Title="Data System"
+            ContentTemplate="{DataTemplate views:MainPage}"
+            Route="MainPage" />
+        </Tab>
+        
+        <Tab Title="Products">
+            <ShellContent
+            Title="Products"
+            ContentTemplate="{DataTemplate views:ProductsPage}"
+            Route="ProductsPage" />
+        </Tab>
+
+        <Tab Title="Categories">
+            <ShellContent
+            Title="Categories"
+            ContentTemplate="{DataTemplate views:CategoriesPage}"
+            Route="CategoriesPage" />
+        </Tab>
+
+        <Tab Title="Clients">
+            <ShellContent
+            Title="Clients"
+            ContentTemplate="{DataTemplate views:ClientsPage}"
+            Route="ClientsPage" />
+        </Tab>
+
+    </FlyoutItem>
+
+    <ShellContent 
+        Title="Help Support"
+        ContentTemplate="{DataTemplate views:HelpSupportPage}"
+        Route="HelpSupportPage"
+        />
+
+    <MenuItem 
+        Text="Abrir Pagina"
+        Clicked="MenuItem_Clicked"
+        />
+
+
+</Shell>
