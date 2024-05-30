@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace ShopApp.DataAccess;
 
@@ -8,6 +9,7 @@ namespace ShopApp.DataAccess;
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get;set; }
         public DbSet<Client> Clients { get; set; }
+        //public DbSet<Compra> Compras { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -49,8 +51,9 @@ public record Product(int Id, string Nombre, string Descripcion, decimal Precio,
 }
 
 public record Client(int Id, string Nombre, string Direccion);
+public record Compra(int ClientId, int ProductId, int Cantidad);
 
-    
+
 
 
 
