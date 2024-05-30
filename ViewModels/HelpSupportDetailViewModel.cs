@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ShopApp.DataAccess;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 //using static Android.Icu.Text.CaseMap;
 
 namespace ShopApp.ViewModels;
-
 
 public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttributable
 {
@@ -23,7 +23,6 @@ public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttribu
 
     [ObservableProperty]
     private int cantidad;
-
     public HelpSupportDetailViewModel()
     {
         var database = new ShopDbContext();
@@ -31,19 +30,32 @@ public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttribu
 
         AddCommand = new Command(() =>
         {
-            var compra = new Compra(ClienteId, ProductoSeleccionado.Id, Cantidad);
+            var compra = new Compra(
+                ClienteId,
+                ProductoSeleccionado.Id,
+                Cantidad,
+                ProductoSeleccionado.Nombre,
+                ProductoSeleccionado.Precio,
+                ProductoSeleccionado.Precio * Cantidad
+                );
             Compras.Add(compra);
         },
         () => true
         );
     }
     public ICommand AddCommand { get; set; }
-
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var clientId = int.Parse(query["id"].ToString());
         ClienteId = clientId;
     }
+    [RelayCommand]
+    private void EliminarCompra(Compra compra)
+    {
+        Compras.Remove(compra);
+    }
 }
+
+
 
 

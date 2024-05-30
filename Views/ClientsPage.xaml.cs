@@ -1,19 +1,13 @@
 using ShopApp.DataAccess;
+using ShopApp.ViewModels;
 
 namespace ShopApp.Views;
 
 public partial class ClientsPage : ContentPage
 {
-	public ClientsPage()
+	public ClientsPage(ClientsViewModel viewModel)
 	{
 		InitializeComponent();
-
-        var dbContext = new ShopDbContext();
-
-        foreach (var client in dbContext.Clients)
-        {
-            container.Children.Add(new Label { Text = client.Nombre });
-        }
-
+        BindingContext = viewModel;
     }
 }
