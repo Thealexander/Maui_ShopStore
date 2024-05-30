@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ShopApp.DataAccess;
+using ShopApp.Services;
+using ShopApp.ViewModels;
 using ShopApp.Views;
 
 namespace ShopApp;
@@ -10,14 +12,21 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()
+            .UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		var dbContext = new ShopDbContext();
+		builder.Services.AddSingleton<INavegacionService, NavegacionService>();
+        builder.Services.AddTransient<HelpSupportViewModel>();
+		builder.Services.AddTransient<HelpSupportPage>();
+        builder.Services.AddTransient<HelpSupportDetailViewModel>();
+        builder.Services.AddTransient<HelpSupportDetailPage>();
+
+
+        var dbContext = new ShopDbContext();
 		dbContext.Database.EnsureCreated();
 		dbContext.Dispose();
 
