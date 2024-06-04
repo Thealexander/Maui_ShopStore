@@ -1,9 +1,9 @@
 ﻿using Android.App;
 using Android.Runtime;
-
+[assembly: UsesPermission(Android.Manifest.Permission.AccessNetworkState)]// permite conexiones remotas
 namespace ShopApp;
 
-[Application]
+[Application(UsesCleartextTraffic = true)]// aca se configura para las conexiones remotas
 public class MainApplication : MauiApplication
 {
 	public MainApplication(IntPtr handle, JniHandleOwnership ownership)

@@ -5,7 +5,7 @@
               xmlns:vm="clr-namespace:ShopApp.ViewModels"
              Title="HelpSupportDetailPage">
 
-    <Grid RowDefinitions="*,Auto,*">
+    <FlexLayout Direction="Column" JustifyContent="Center" AlignContent="Center"> 
         <Grid ColumnDefinitions="*,*">
             <VerticalStackLayout>
                 <CollectionView 
@@ -44,6 +44,7 @@
         <CollectionView 
                 Grid.Row="2"
                 ItemsSource="{Binding Compras}"
+                FlexLayout.Grow="1"
          >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -88,5 +89,11 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </Grid>
+        <Button 
+            Grid.Row="3"
+            Text="Send"
+            Command="{Binding AddToCarCommand}"
+            />
+
+    </FlexLayout>
 </ContentPage>
