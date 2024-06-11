@@ -18,14 +18,16 @@
             <Label Text="{x:Static info:AppInfo.VersionString}"/>
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
-    
-    
+
+    <ShellContent
+    Title="Resumen de Ventas"
+    ContentTemplate="{DataTemplate views:SummaryPage}"
+    Route="SummaryPage" />
 
     <ShellContent
         Title="About MyStore"
         ContentTemplate="{DataTemplate views:AboutPage}"
         Route="AboutPage" />
-
 
     <FlyoutItem Title="Settings">
         <Tab Title="Summary">

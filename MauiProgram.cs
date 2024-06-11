@@ -29,10 +29,16 @@ public static class MauiProgram
         builder.Services.AddTransient<ProductsViewModel>();
         builder.Services.AddTransient<ProductsPage>();
         builder.Services.AddTransient<ProductDetailsViewModel>();
-        builder.Services.AddTransient<ProductDetailPage>();
+        builder.Services.AddTransient<SummaryPage>();
+        builder.Services.AddTransient<SummaryViewmodel>();
 		builder.Services.AddSingleton(Connectivity.Current);
-		builder.Services.AddSingleton<ComprasService>();
+		builder.Services.AddSingleton<CompraService>();
 		builder.Services.AddSingleton<HttpClient>();
+		builder.Services.AddSingleton<IDatabaseRouteService, DatabaseRouteService>();
+		builder.Services.AddDbContext<ShopOutDbContext>();
+        builder.Services.AddSingleton<SecurityService>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<LoginPage>();
 
 
         var dbContext = new ShopDbContext();

@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace ShopApp.Services;
 
-    public  class ComprasService
+    public  class CompraService
     {
     private HttpClient client;
-    public ComprasService(HttpClient client)
+    public CompraService(HttpClient client)
     {
         this.client = client;
     }
     public  async Task<bool> SendData(IEnumerable<Compra> compras)
     {
-        var uri = "http://192.168.1.13:5000/api/Compra";
+        var uri = "http://192.168.1.60:5000/api/compra";
         var body = new
         {
             data = compras

@@ -28,8 +28,10 @@ public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttribu
     [ObservableProperty]
     private int cantidad;
 
-    private ComprasService _comprasService;
-    public HelpSupportDetailViewModel(IConnectivity connectivity, ComprasService comprasService)
+    private CompraService _compraService;
+    private readonly ShopOutDbContext _shopOutDbContext;
+
+    public HelpSupportDetailViewModel(IConnectivity connectivity, CompraService compraService, ShopOutDbContext shopOutDbContext)
     {
         var database = new ShopDbContext();
         Products = new ObservableCollection<Product>(database.Products);
@@ -50,15 +52,30 @@ public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttribu
         );
         _connectivity = connectivity;
         _connectivity.ConnectivityChanged += _connectivity_ConnectivityChanged;
-        _comprasService= comprasService;
+        _compraService = compraService;
+        _shopOutDbContext = shopOutDbContext;
     }
     [RelayCommand(CanExecute = nameof(StatusConnection))]
     private async Task AddToCar()
     {
-        var result = await _comprasService.SendData(Compras);
+        /*
+         var result = await _comprasService.SendData(Compras);
         if (result)
         {
             await Shell.Current.DisplayAlert("Message", "Se enviaron compras al backend", "ok");
+        }
+         */
+        _shopOutDbContext.Database.EnsureCreated();
+        foreach (var item in Compras)
+        {
+            _shopOutDbContext.Compras.Add(new CompraItem(
+                item.ClientId,
+                item.ProductId,
+                item.Cantidad,
+                item.ProductoPrecio
+                ));
+            await _shopOutDbContext.SaveChangesAsync();
+            await Shell.Current.DisplayAlert("Message", "Se almaceno la compra en la db", "ok");
         }
     }
     private void _connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
