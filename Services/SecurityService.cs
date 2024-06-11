@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using ShopApp.Models.Backend.Login;
+using ShopApp.Models.Config;
 using System.Text;
 
 namespace ShopApp.Services
@@ -7,15 +9,17 @@ namespace ShopApp.Services
     public class SecurityService
     {
         private HttpClient client;
+        private Settings settings;
 
-        public SecurityService(HttpClient client)
+        public SecurityService(HttpClient client, IConfiguration configuration)
         {
             this.client = client ?? throw new ArgumentNullException(nameof(client));
+            settings = configuration.GetRequiredSection(nameof(Settings)).Get<Settings>();
         }
 
         public async Task<bool> Login(string email, string password)
         {
-            var url = "http://192.168.1.60:5000/api/usuario/login";
+            var url = $"{settings.UrlBase}/api/usuario/login";
             var loginRequest = new LoginRequest
             {
                 Email = email,

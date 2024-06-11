@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using ShopApp.DataAccess;
 using ShopApp.Services;
 using ShopApp.ViewModels;
 using ShopApp.Views;
+using System.Reflection;
 
 namespace ShopApp;
 
@@ -10,6 +12,13 @@ public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
+		var assemblyInstance = Assembly.GetExecutingAssembly();
+		using var stream = assemblyInstance.GetManifestResourceStream("ShopApp.appsettings.json");
+
+		var config = new ConfigurationBuilder()
+			.AddJsonStream(stream)
+			.Build();
+
 		var builder = MauiApp.CreateBuilder();
 		builder
             .UseMauiApp<App>()
@@ -18,6 +27,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+		builder.Configuration.AddConfiguration(config);
 
 		builder.Services.AddSingleton<INavegacionService, NavegacionService>();
         builder.Services.AddTransient<HelpSupportViewModel>();
